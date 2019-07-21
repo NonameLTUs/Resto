@@ -1,0 +1,21 @@
+@import "~@/assets/variables";
+
+.container {
+  background-color: $color-white;
+  padding-top: 10rem;
+  padding-bottom: 20rem;
+}
+
+.content {
+  @include content;
+}
+
+.heading {
+  @include sectionHeading;
+}
+
+.items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 8rem;
+}

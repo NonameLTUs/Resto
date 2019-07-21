@@ -1,0 +1,49 @@
+@import "~@/assets/variables";
+
+.container {
+  border-top: 4px solid $color-accent;
+  background-color: $color-white;
+}
+
+/// Heading
+.heading {
+  display: inline-block;
+  position: relative;
+  padding: 2rem 2.5rem 3.5rem 2.5rem;
+  color: $color-white;
+  font-size: 2rem;
+  font-weight: $fw-bold;
+  text-transform: capitalize;
+  background-color: $color-accent;
+  left: 50%;
+  transform: translateX(-50%);
+
+  &::before {
+    content: '';
+    position: absolute;
+    background-color: $color-white;
+    clip-path: polygon(50% 89%, 0% 100%, 100% 100%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+/// Content
+.content {
+  @include content;
+
+  height: 0;
+  margin-top: 8rem;
+  overflow: hidden;
+  transition: all .4s;
+
+  &-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 11.5rem;
+    grid-row-gap: 6rem;
+    grid-auto-rows: auto;
+  }
+}

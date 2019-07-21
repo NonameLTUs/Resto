@@ -1,0 +1,16 @@
+@import "~@/assets/variables";
+
+.container {
+  background: $color-white;
+}
+
+.content {
+  @include content;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navigation {
+  display: flex;
+}
