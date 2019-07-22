@@ -22,6 +22,7 @@
 }
 
 .slider {
+  width: 100%;
   overflow: hidden;
   transition: all .2s;
 
@@ -29,10 +30,14 @@
     display: flex;
     margin-left: 0;
     transition: all 1s cubic-bezier(.65, 1.41, .59, .95);
+  }
+}
 
-
-    & > *:not(:last-child) {
-      margin-right: 6rem;
-    }
+/*********************
+* Responsive
+*********************/
+@media only screen and (max-width: 600px) {
+  .header {
+    flex-direction: column;
   }
 }

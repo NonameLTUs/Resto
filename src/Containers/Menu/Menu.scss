@@ -47,3 +47,19 @@
     grid-auto-rows: auto;
   }
 }
+
+/*****************************
+* RESPONSIVE
+*****************************/
+@media only screen and (max-width: 1000px) {
+  .heading {
+    font-size: 1.4rem;
+    padding: 2rem 2.5rem 2.5rem 2.5rem;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .content-items {
+    grid-template-columns: 1fr;
+  }
+}

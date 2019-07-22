@@ -1,9 +1,10 @@
 import React from 'react'
+import _ from 'lodash'
 
 import classes from './Menu.scss'
-
 import LoadMoreButton from './LoadMoreButton'
 import Item from './Item'
+
 import Loader from './Loader'
 
 const items = [
@@ -71,14 +72,19 @@ export default class Menu extends React.PureComponent {
     };
 
     componentDidUpdate() {
-        this.setState({
-            containerHeight: this.getContainerHeight()
-        });
+        this.updateContainerHeight();
     }
 
     componentDidMount() {
         this.loadMore();
     }
+
+    /// Update container height
+    updateContainerHeight = () => {
+        this.setState({
+            containerHeight: this.getContainerHeight()
+        });
+    };
 
     /// Get styles
     getContainerHeight = () => {
@@ -118,6 +124,8 @@ export default class Menu extends React.PureComponent {
     };
 
     render() {
+        window.addEventListener("resize", _.debounce(this.updateContainerHeight, 100));
+
         return (
             <div className={classes.container}>
                 <div className={classes.heading}>

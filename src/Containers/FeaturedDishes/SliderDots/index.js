@@ -4,7 +4,7 @@ import classes from './SliderDots.scss'
 
 export default props => {
     const dots = [];
-    for (let i = 0; i <= props.totalSlides; i++) {
+    for (let i = 0; i <= props.totalSlides - 1; i++) {
         dots.push({
             index: i,
             isActive: i === props.activeSlide

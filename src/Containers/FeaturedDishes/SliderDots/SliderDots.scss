@@ -26,3 +26,12 @@
 .active {
   background-color: #9b9b9b;
 }
+
+/*********************
+* Responsive
+*********************/
+@media only screen and (max-width: 600px) {
+  .container {
+    margin-top: 2rem;
+  }
+}

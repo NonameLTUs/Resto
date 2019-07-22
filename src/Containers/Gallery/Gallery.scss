@@ -10,6 +10,10 @@
   @include content;
 }
 
+.header {
+  display: block;
+}
+
 .heading {
   @include sectionHeading;
 }
@@ -18,4 +22,34 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-top: 8rem;
+}
+
+/*********************
+* Responsive
+*********************/
+@media only screen and (max-width: 1300px) {
+  .container {
+    padding-bottom: 10rem;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .container {
+    padding-bottom: 0;
+  }
+
+  .content {
+    margin: 0;
+    display: inline;
+  }
+
+  .heading {
+    @include content;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .header {
+    text-align: center;
+  }
 }

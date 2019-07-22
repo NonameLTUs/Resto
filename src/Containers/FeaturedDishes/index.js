@@ -3,80 +3,9 @@ import React from 'react'
 import classes from './FeaturedDishes.scss'
 
 import SliderDots from './SliderDots'
-import SliderItem from './SliderItem'
+import SliderPage from './SliderPage'
 
-const items = [
-    {
-        id: 1,
-        filename: 1,
-        title: 'Fugiat nulla sint',
-        price: 32,
-        rating: 4
-    },
-    {
-        id: 2,
-        filename: 2,
-        title: 'Fugiat nulla sint',
-        price: 30,
-        rating: 4
-    },
-    {
-        id: 3,
-        filename: 3,
-        title: 'Fugiat nulla sint',
-        price: 30,
-        rating: 4
-    },
-    {
-        id: 4,
-        filename: 4,
-        title: 'Fugiat nulla sint',
-        price: 30,
-        rating: 4
-    },
-    {
-        id: 5,
-        filename: 3,
-        title: 'Fugiat nulla sint',
-        price: 350,
-        rating: 4
-    },
-    {
-        id: 6,
-        filename: 1,
-        title: 'Fugiat nulla sint',
-        price: 300,
-        rating: 4
-    },
-    {
-        id: 7,
-        filename: 1,
-        title: 'Fugiat nulla sint',
-        price: 300,
-        rating: 4
-    },
-    {
-        id: 8,
-        filename: 1,
-        title: 'Fugiat nulla sint',
-        price: 300,
-        rating: 4
-    },
-    {
-        id: 9,
-        filename: 1,
-        title: 'ZASIBYS nulsla sint',
-        price: 100,
-        rating: 4
-    },
-    {
-        id: 10,
-        filename: 1,
-        title: 'FUGIOOO nulla sint',
-        price: 1,
-        rating: 6
-    }
-];
+import items from './items'
 
 export default class FeaturedDishes extends React.Component {
     constructor(props) {
@@ -88,11 +17,14 @@ export default class FeaturedDishes extends React.Component {
 
     state = {
         activeSlide: 0,
-        totalSlides: 0
+        totalSlides: 0,
+        itemsPerSlide: 4,
+        slides: [{page: 0, items: [items[0]]}]
     };
 
     componentDidMount() {
         this.setTotalSlides();
+        this.mount();
     }
 
     slideChange = index => {
@@ -101,59 +33,77 @@ export default class FeaturedDishes extends React.Component {
         })
     };
 
-    gapBeforeItem = (int) => {
-        const sliderItems = this.sliderItemsRef.current;
-        let result = null;
-        if (null === sliderItems) {
-            result = 0 + 'px';
-        } else {
-            result = getComputedStyle(sliderItems.children[0])["margin-right"];
+    getItemsPerSlide = () => {
+        if (null === this.sliderItemsRef.current) {
+            return 1;
         }
-        if (int) {
-            return parseInt(result)
-        } else {
-            return result
+
+        if (this.sliderItemsRef.current.children.length === 0) {
+            return 1;
         }
+
+        const object = this.sliderItemsRef.current.children[0];
+        const styleOfObject = getComputedStyle(object);
+        const countOfColumns = styleOfObject["grid-template-columns"].split(' ').length;
+        const countOfRows = styleOfObject["grid-template-rows"].split(' ').length;
+        return countOfColumns * countOfRows;
     };
 
-    itemWidth = () => {
-        if (null !== this.sliderItemsRef.current) {
-            return this.sliderItemsRef.current.children[0].clientWidth + this.gapBeforeItem(true);
-        }
+    mount = () => {
+        const itemsPerSlide = this.getItemsPerSlide();
+        const slides = this.splitItemsBySlides(itemsPerSlide);
 
-        return 0;
+        if (this.state.itemsPerSlide !== itemsPerSlide || this.state.slides !== slides) {
+            this.setState({
+                itemsPerSlide,
+                slides
+            })
+        }
     };
 
     setTotalSlides = () => {
-        let slides = 0;
+        const itemsPerSlide = this.getItemsPerSlide();
+        const totalSlides = Math.ceil(items.length / itemsPerSlide);
 
-        if (null !== this.sliderItemsRef.current) {
-            const itemsPerPage = Math.ceil(this.sliderContainerRef.current.clientWidth / this.itemWidth());
-            slides = Math.ceil(items.length / itemsPerPage);
+        if (this.state.totalSlides !== totalSlides) {
+            this.setState({
+                totalSlides
+            })
         }
-
-        this.setState({
-            totalSlides: slides
-        })
     };
 
-    getMarginOfSliderItems = () => {
-        const {activeSlide} = this.state;
-        let gapBeforeItem = this.gapBeforeItem(true) * activeSlide + 'px';
+    splitItemsBySlides = itemsPerSlide => {
+        const splittedItems = [];
+        let count = 1;
+        let page = 0;
 
-        if (0 === activeSlide) {
-            gapBeforeItem = 0 + 'px';
+        for (let i in items) {
+            if (items.hasOwnProperty(i)) {
+                const item = items[i];
+                if (!splittedItems.hasOwnProperty(page)) {
+                    splittedItems[page] = {page: page, items: []};
+                }
+                splittedItems[page].items.push(item);
+
+                if (count === itemsPerSlide) {
+                    page++;
+                    count = 0;
+                }
+
+                count++;
+            }
         }
 
-        const marginInPercentages = -(activeSlide * 100);
-
-        return `calc(${marginInPercentages}% - ${gapBeforeItem})`
+        return splittedItems;
     };
 
     render() {
         const styleOfSliderItems = {
-            marginLeft: this.getMarginOfSliderItems()
+            marginLeft: `${-(this.state.activeSlide * 100)}%`,
+            width: `${(this.state.totalSlides) * 100}% `
         };
+
+        const pages = this.state.slides;
 
         return (
             <div className={classes.container}>
@@ -165,7 +115,7 @@ export default class FeaturedDishes extends React.Component {
                     </div>
                     <div className={classes["slider"]} ref={this.sliderContainerRef}>
                         <div className={classes["slider-items"]} style={styleOfSliderItems} ref={this.sliderItemsRef}>
-                            {items.map(item => <SliderItem key={item.id} {...item} />)}
+                            {pages.map(page => <SliderPage key={page.page} items={page.items}/>)}
                         </div>
                     </div>
                 </div>
