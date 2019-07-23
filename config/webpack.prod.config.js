@@ -1,7 +1,6 @@
 const common = require("./webpack.common.config");
 const merge = require('webpack-merge');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 const path = require('path');
 
 const PUBLIC_URL = "/";
@@ -21,6 +20,9 @@ module.exports = merge(common, {
                 }
             })
         ]
+    },
+    performance: {
+        hints: process.env.NODE_ENV === 'production' ? "warning" : false
     },
     module: {
         rules: [
@@ -68,29 +70,24 @@ module.exports = merge(common, {
                     path.resolve(__dirname, "../src/assets/scss/no_module")
                 ],
                 use: [
-                    {loader: "style-loader"},
+                    {loader: 'style-loader'},
                     {
-                        loader: "css-loader",
-                        options: {
-                            modules: true,
-                            importLoaders: 1,
-                            localIdentName: '[sha1:hash:hex:8]'
+                        loader: 'css-loader', options: {
+                            sourceMap: true, modules: true,
+                            localIdentName: '[local]_[hash:base64:5]'
                         }
                     },
-                    {loader: "sass-loader"},
                     {
                         loader: 'postcss-loader',
                         options: {
-                            ident: 'postcss',
-                            plugins: () => [
-                                autoprefixer({
-                                    browsers: [
-                                        "> 1%",
-                                        "last 2 versions"
-                                    ]
-                                })
-                            ]
+                            sourceMap: true,
+                            config: {
+                                path: path.resolve(__dirname, 'postcss.config.js')
+                            }
                         }
+                    },
+                    {
+                        loader: 'sass-loader', options: {sourceMap: true}
                     }
                 ]
             },
@@ -101,7 +98,7 @@ module.exports = merge(common, {
                     path.resolve(__dirname, "../src/assets/scss/no_module")
                 ],
                 use: [
-                    { loader: "style-loader" },
+                    {loader: "style-loader"},
                     {
                         loader: "css-loader",
                         options: {
@@ -109,7 +106,7 @@ module.exports = merge(common, {
                             importLoaders: 1
                         }
                     },
-                    { loader: "sass-loader" }
+                    {loader: "sass-loader"}
                 ]
             }
         ]

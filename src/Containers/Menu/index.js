@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 
 import classes from './Menu.scss'
 import LoadMoreButton from './LoadMoreButton'
@@ -124,8 +123,6 @@ export default class Menu extends React.PureComponent {
     };
 
     render() {
-        window.addEventListener("resize", _.debounce(this.updateContainerHeight, 100));
-
         return (
             <div className={classes.container}>
                 <div className={classes.heading}>
