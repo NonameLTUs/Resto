@@ -3,7 +3,7 @@ const merge = require('webpack-merge');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const path = require('path');
 
-const PUBLIC_URL = "/";
+const PUBLIC_URL = "https://nonameltus.github.io/Resto/";
 
 module.exports = merge(common, {
     mode: 'production',
@@ -41,9 +41,9 @@ module.exports = merge(common, {
                         options: {
                             modules: true,
                             importLoaders: 1,
-                            localIdentName: '[sha1:hash:hex:8]'
+                            localIdentName: '[name]__[local]--[hash:base64:5]'
                         }
-                    },
+                    }
                 ]
             },
             {
@@ -70,32 +70,23 @@ module.exports = merge(common, {
                     path.resolve(__dirname, "../src/assets/scss/no_module")
                 ],
                 use: [
-                    {loader: 'style-loader'},
+                    {loader: "style-loader"},
                     {
-                        loader: 'css-loader', options: {
-                            sourceMap: true, modules: true,
-                            localIdentName: '[local]_[hash:base64:5]'
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
+                        loader: "css-loader",
                         options: {
-                            sourceMap: true,
-                            config: {
-                                path: path.resolve(__dirname, 'postcss.config.js')
-                            }
+                            modules: true,
+                            importLoaders: 1,
+                            localIdentName: '[name]__[local]--[hash:base64:5]'
                         }
                     },
-                    {
-                        loader: 'sass-loader', options: {sourceMap: true}
-                    }
+                    {loader: "sass-loader"}
                 ]
             },
             {
                 test: /\.scss$/,
                 include: [
                     /node_modules/,
-                    path.resolve(__dirname, "../src/assets/scss/no_module")
+                    path.resolve(__dirname, "../src/assets/scss/no_module"),
                 ],
                 use: [
                     {loader: "style-loader"},

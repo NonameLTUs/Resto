@@ -1,6 +1,6 @@
 import React from 'react';
 
-const url = `${window.location.origin}/sprite.svg`;
+const url = `${process.env.PUBLIC_URL}/img/sprite.svg`;
 
 export default props => (
     <svg viewBox='0 0 16 16' className={props.className}>

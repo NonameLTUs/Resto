@@ -3,7 +3,7 @@ import React from 'react'
 import classes from './Item.scss'
 
 export default props => {
-    const url = `${window.location.origin}/img/gallery/${props.filename}.jpg`;
+    const url = `${process.env.PUBLIC_URL}/img/gallery/${props.filename}.jpg`;
 
     const style = {
         gridColumn: `auto / span ${props.style.columnSpan}`,

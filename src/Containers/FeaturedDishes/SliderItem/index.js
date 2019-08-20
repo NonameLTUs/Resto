@@ -5,7 +5,7 @@ import classes from './SliderItem.scss'
 import Star from './Star'
 
 export default props => {
-    const url = `${window.location.origin}/img/dishes/${props.filename}.jpg`;
+    const url = `${process.env.PUBLIC_URL}/img/dishes/${props.filename}.jpg`;
 
     const stars = [];
     for (let i = 1; i <= 5; i++) {
