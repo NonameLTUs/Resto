@@ -1,0 +1,12 @@
+<svg aria-hidden="true" style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <defs>
+        <symbol id="icon-arrow-to-bottom" viewBox="0 0 51 32">
+            <title>arrow-to-bottom</title>
+            <path d="M0 6.937l25.316 25.063 25.316-25.063-6.856-6.937-18.461 18.329-18.461-18.329z"></path>
+        </symbol>
+        <symbol id="icon-star" viewBox="0 0 34 32">
+            <title>star</title>
+            <path d="M21.084 11.927q-3.004-8.105-4.3-11.927l-4.166 11.927c-2.419 0.056-5.241 0.14-8.466 0.224-2.52 0.084-3.883 0.14-4.121 0.14l10.124 7.559c-2.36 7.923-3.556 11.954-3.584 12.15q10.213-7.279 10.359-7.279l10.392 7.139q-1.839-5.921-3.673-12.095 6.672-5.123 9.989-7.671-5.51-0.168-12.542-0.168v0z"></path>
+        </symbol>
+    </defs>
+</svg>
